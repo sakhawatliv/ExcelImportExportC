@@ -8,14 +8,14 @@ using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace ExcelExport
 {
-    public class Exel
+    public class Excel
     {
         string path = "";
         _Application excel = new _Excel.Application();
         Workbook wb;
         Worksheet ws;
 
-        public Exel(string path, int Sheet)
+        public Excel(string path, int Sheet)
         {
             this.path = path;
             wb = excel.Workbooks.Open(path);
@@ -28,7 +28,7 @@ namespace ExcelExport
             j++;
             if (ws.Cells[i, j].Value2 != null)
             {
-                return ws.Cells[i, j].Value2;
+                return (ws.Cells[i, j].Value2).ToString();
             }
             else
             {
