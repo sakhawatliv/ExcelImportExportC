@@ -21,7 +21,7 @@ namespace ExcelExport
             StreamWriter sw = new StreamWriter("D:\\Test.sql");
             
             int col = 7;
-            int row = 3;
+            int row = 71;
             int minDistance = 0;
             int maxDistance = 150;
             int minWeight = 0;
@@ -34,10 +34,10 @@ namespace ExcelExport
             string createDate = (DateTime.Now).ToString();
             string modifiedBy = "1";
             int c = 2;
-            int[] distanceArr = new int[7] {300, 600, 1000, 1400, 1800, 182222222,150};
+            int[] distanceArr = new int[6] {300, 600, 1000, 1400, 1800, 182222222};
 
             string sql = "";
-            string insertSql = "INSERT INTO GlobalShippingCost (MethodId,MinWeight,MaxWeight,MinDistance,MaxDistance,Cost,MeasuringUnit,CountryId,IsAverage,Active,CreateDate,LastModified,ModifiedBy) VALUES(1," + (minWeight).ToString() + "," + (maxWeight).ToString() + "," + (minDistance).ToString() + "," + (maxDistance).ToString() + ",";
+            string insertSql = "INSERT INTO GlobalShippingCost (MethodId,MinWeight,MaxWeight,MinDistance,MaxDistance,Cost,MeasuringUnit,CountryId,IsAverage,Active,CreateDate,LastModified,ModifiedBy) VALUES(1," ;
 
 
 
@@ -51,15 +51,25 @@ namespace ExcelExport
                     {
                         cost = (excel.ReadCell(i, c)).ToString();
 
-                        sql += insertSql + cost + "," + measuringUnit + "," + countryId + "," + "'" + isAverage + "'" + "," + "'" + active + "'" + "," + "'" + createDate + "'" + "," + "'" + createDate + "'" + "," + modifiedBy + ")";
-                        minDistance = maxDistance + 1;
-                        maxDistance = distanceArr[c - 2];
-                        c++;
+                        sql += insertSql + (minWeight).ToString() + "," + (maxWeight).ToString() + "," + (minDistance).ToString() + "," + (maxDistance).ToString() + "," + cost + "," + measuringUnit + "," + countryId + "," + "'" + isAverage + "'" + "," + "'" + active + "'" + "," + "'" + createDate + "'" + "," + "'" + createDate + "'" + "," + modifiedBy + ")"+" " + Environment.NewLine;
+                        if (c != 8)
+                        {
+                            minDistance = maxDistance + 1;
+                            maxDistance = distanceArr[c - 2];
+                            c++;
+                        }
+                        else
+                        {
+                            minDistance = 0;
+                            maxDistance = 150;
+                            c = 2;
+                        }
+                        
                     }
                     else
                     {
                         sql +=
-                            "INSERT INTO GlobalShippingCost(MethodId,MinWeight,MaxWeight,MinDistance,MaxDistance,Cost,MeasuringUnit,CountryId,IsAverage,Active,CreateDate,LastModified,ModifiedBy)  VALUES(1,"+(minWeight).ToString()+","+(maxWeight).ToString()+" , 0, 0, 7.71, 1, 736, 'true', 'true', '"+createDate+ "', '" + createDate + "', 1)";
+                            "INSERT INTO GlobalShippingCost(MethodId,MinWeight,MaxWeight,MinDistance,MaxDistance,Cost,MeasuringUnit,CountryId,IsAverage,Active,CreateDate,LastModified,ModifiedBy)  VALUES(1,"+(minWeight).ToString()+","+(maxWeight).ToString()+" , 0, 0,"+(excel.ReadCell(i,1)).ToString()+", 1, 736, 'true', 'true', '"+createDate+ "', '" + createDate + "', 1)"+Environment.NewLine;
                     }
                     
                 }
